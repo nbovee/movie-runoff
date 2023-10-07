@@ -1,34 +1,10 @@
-import io
-import os
-import csv
-import glob
 import argparse
-import tkinter as tk
-from random import randint
-from zipfile import ZipFile
-from tkinter.filedialog import askopenfilename
+from gform_csvzip import acquire_file, parse_file
 
 class Suggest:
     def __init__(self, args) -> None:
-        self.select = not args.select
-        self.filepath = self.acquire_file()
-        self.file_contents = self.parse_file()
-
-    def acquire_file(self):
-        if self.select is True:
-            files = glob.glob('../Suggest a Movie.csv*.zip')
-            return max(files, key=os.path.getctime)
-        else:
-            root = tk.Tk()
-            root.withdraw()
-            return askopenfilename()
-
-    def parse_file(self):
-        with ZipFile(self.filepath, 'r') as zipfile:
-            with zipfile.open(zipfile.namelist()[0], 'r') as csvfile:
-                reader = csv.reader(
-                    io.TextIOWrapper(csvfile, 'utf-8'))
-                return list(reader)
+        self.filepath = acquire_file(args.select, 'Suggest a Movie', path='exports/')
+        self.file_contents = parse_file(self.filepath)
                 
     def pretty_print(self):
         div = '\n\n'
