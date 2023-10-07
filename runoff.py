@@ -1,3 +1,4 @@
+import re
 import sys
 import argparse
 from random import randint
@@ -26,8 +27,7 @@ class Runoff:
         self.tie = False
     
     def load_ballots(self):
-        self.movies = self.file_contents[0][1:]
-        pass
+        self.movies = [re.search(r'\[(.+)\]', movie).group(1) for movie in self.file_contents[0][1:]]
         for ballot in list(self.file_contents[1:]):
             self.ballots.append(Ballot([int(val) if val != '' else -1 for val in ballot[1:]]))
     
