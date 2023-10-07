@@ -30,7 +30,6 @@ class Suggest:
                     io.TextIOWrapper(csvfile, 'utf-8'))
                 return list(reader)
                 
-    
     def pretty_print(self):
         div = '\n\n'
         ballot_desc = []
