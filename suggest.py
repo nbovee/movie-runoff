@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-from gform_csvzip import acquire_file, parse_file, log_contents
+from file_handling_common import acquire_file, parse_file, log_contents
 
 class Suggest:
     def __init__(self, args) -> None:
