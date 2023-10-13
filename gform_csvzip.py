@@ -1,6 +1,7 @@
 import io
 import os
 import csv
+import json
 import glob
 import tkinter as tk
 from zipfile import ZipFile
@@ -24,3 +25,23 @@ def parse_file(filepath):
             for entry in list(reader):
                 suggestions.append(entry.values())
             return suggestions
+        
+def log_contents(log_data, writepath):
+    suggest_archive = writepath
+    set_data = []
+    with open(suggest_archive, 'r+') as outfile:
+        past_suggestions = json.load(outfile)
+        if past_suggestions is not None:
+            past_suggestions = [tuple(item) for item in past_suggestions]
+        else:
+            past_suggestions = []
+        set_data = set(past_suggestions).union(log_data)
+    with open(suggest_archive+'.temp', 'w') as writefile:
+        writefile.write(json.dumps(list([list(item) for item in set_data]), indent=2))
+    os.replace(suggest_archive, suggest_archive+'.old')
+    if os.stat(suggest_archive+'.temp').st_size > os.stat(suggest_archive+'.old').st_size : # assuming some error if it has less to write
+        os.rename(suggest_archive+'.temp',suggest_archive)
+        # keeps .old file until next call just in case
+    else:
+        os.rename(suggest_archive+'.old', suggest_archive)
+        os.remove(suggest_archive+'.temp')

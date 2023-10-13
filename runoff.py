@@ -125,6 +125,7 @@ def main():
     parser.add_argument('-q','--quiet',help='ignore all print statements except the one for the winner',action='store_true')
     parser.add_argument('-r','--reorder_votes',help='after a movie is removed, reorder the ballot votes to the lowest possible numbers (i.e. [1,2,4,5,7] -> [1,2,3,4,5])',action='store_true')
     parser.add_argument('-s','--select',help='select a file instead of using the most recent expected filename',action='store_true')
+    parser.add_argument('-l','--log',help='block logfile output',action='store_true')
     args = parser.parse_args()
 
     filepath = acquire_file(args.select, 'Runoff Votes', path='ballots/')

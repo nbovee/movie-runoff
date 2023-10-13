@@ -1,5 +1,7 @@
 import argparse
-from gform_csvzip import acquire_file, parse_file
+import json
+import os
+from gform_csvzip import acquire_file, parse_file, log_contents
 
 class Suggest:
     def __init__(self, args) -> None:
@@ -15,16 +17,22 @@ class Suggest:
                 outfile.write(str(self))
         else:
             print(self)
+
     
     def parse_suggestions(self):
         self.parsed_suggestions = []
-        for _, title, pitch, runtime, year, notes in self.file_contents[1:]:
+        suggestion_log = []
+        for timestamp, title, pitch, runtime, year, notes in self.file_contents[1:]: # doesnt work with older suggestions, need to swap to dicts
             title = title.strip()
             h, m, s = map(int, runtime.split(':'))
             notes = f'\n[{notes.strip()}]' if notes else ''
             pitch = pitch.replace('\n+','\n').strip()
             self.parsed_suggestions.append([title, f'{title} ({year}, {h}h{m:0>2}m)', f'{pitch}{notes}'])
-
+            suggestion_log.append((title, year, timestamp))
+        
+        if not self.args.log:
+            log_contents(suggestion_log, 'exports/all_suggested.json')
+            
     def pretty_print(self):
         desc_prefix = 'This Weeks\' Feature Films: '
         div = '\n\n'
@@ -48,6 +56,7 @@ def main():
     parser = argparse.ArgumentParser(description='Parse suggest movies into strings for usage in runoff ballots')
     parser.add_argument('-s','--select',help='select a file instead of using the most recent expected filename',action='store_true')
     parser.add_argument('-o','--outfile',help='save parsed ballots to a file instead of terminal',action='store_true')
+    parser.add_argument('-l','--log',help='block logfile output',action='store_true')
     args = parser.parse_args()
     Suggest(args)
 
