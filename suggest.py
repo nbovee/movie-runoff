@@ -22,7 +22,7 @@ class Suggest:
     def parse_suggestions(self):
         self.parsed_suggestions = []
         suggestion_log = []
-        for timestamp, title, pitch, runtime, year, notes in self.file_contents[1:]: # doesnt work with older suggestions, need to swap to dicts
+        for timestamp, title, pitch, runtime, year, notes in self.file_contents: # doesnt work with older suggestions, need to swap to dicts
             title = title.strip()
             h, m, s = map(int, runtime.split(':'))
             notes = f'\n[{notes.strip()}]' if notes else ''
@@ -34,7 +34,7 @@ class Suggest:
             log_contents(suggestion_log, 'exports/all_suggested.json')
             
     def pretty_print(self):
-        desc_prefix = 'This Weeks\' Feature Films: '
+        desc_prefix = 'NOW PLAYING: '
         div = '\n\n'
         form_desc = []
         question_key = []

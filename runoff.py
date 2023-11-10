@@ -2,7 +2,7 @@ import re
 import sys
 import argparse
 from random import randint
-from gform_csvzip import acquire_file, parse_file
+from file_handling_common import acquire_file, parse_file
 
 class Ballot:
     total_ballots = 0
