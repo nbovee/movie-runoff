@@ -1,5 +1,5 @@
 import argparse
-from gform_csvzip import acquire_file, parse_file
+from domain.gform_csvzip import acquire_file, parse_file
 
 class Suggest:
     def __init__(self, args) -> None:
