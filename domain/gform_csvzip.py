@@ -22,4 +22,4 @@ def parse_file(filepath):
         with zipfile.open(zipfile.namelist()[0], 'r') as csvfile:
             reader = csv.reader(
                 io.TextIOWrapper(csvfile, 'utf-8'))
-            return list(reader)
+            return list(reader) 
