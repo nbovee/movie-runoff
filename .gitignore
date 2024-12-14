@@ -2,5 +2,7 @@
 env
 .venv
 __*
-example\ votes
+example\votes
 exports
+*.zip
+specials/*
