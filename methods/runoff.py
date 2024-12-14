@@ -65,37 +65,44 @@ class InstantRunoffMethod(VotingMethod):
             else:
                 s += 1
 
-    def calculate_winner(self):
+    def process_ballots(self):
         self.drop_movies_with_no_first_votes()
-
+        
         while len(self.movies) > self.num_winners:
             indices_to_check = list(range(len(self.movies)))
             for vote in range(1, self.maxVote + 1):
-                indices_to_check = self.get_indices_with_lowest_vote_count(
-                    indices_to_check, vote
-                )
-
+                indices_to_check = self.get_indices_with_lowest_vote_count(indices_to_check, vote)
+                
                 if len(indices_to_check) == 1:
                     eliminated = self.movies[indices_to_check[0]]
-                    self.eliminated.insert(
-                        0, eliminated
-                    )  # Add to front of eliminated list
+                    self.eliminated.insert(0, eliminated)  # Add to front of eliminated list
                     self.shift_first_votes(indices_to_check[0])
                     if self.reorder:
                         self.maxVote -= 1
                         self.reorder_ballots()
                     break
-
+                
                 if vote == self.maxVote:
                     self.tie = True
+                    # All remaining candidates are tied for this position
+                    tied_candidates = [self.movies[i] for i in indices_to_check]
+                    # Add all but one randomly chosen candidate to eliminated list
                     rand_index = randint(0, len(indices_to_check) - 1)
-                    eliminated = self.movies[indices_to_check[rand_index]]
-                    self.eliminated.insert(
-                        0, eliminated
-                    )  # Add to front of eliminated list
+                    for i, idx in enumerate(indices_to_check):
+                        if i != rand_index:
+                            self.eliminated.insert(0, self.movies[idx])
                     self.shift_first_votes(indices_to_check[rand_index])
                     if self.reorder:
                         self.maxVote -= 1
                         self.reorder_ballots()
-
-        return self.movies  # Return remaining movies as winners
+        
+        # If there's a tie for the last position, return it as a nested list
+        if self.tie:
+            winners = self.movies[:-1]  # All clear winners
+            winners.append([self.movies[-1]] + self.eliminated[:len(indices_to_check)-1])  # Add tied candidates
+            losers = self.eliminated[len(indices_to_check)-1:]  # Rest are losers
+        else:
+            winners = self.movies
+            losers = self.eliminated
+        
+        return winners, losers

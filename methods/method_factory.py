@@ -9,9 +9,14 @@ class VotingMethod(ABC):
         self.num_winners = num_winners
 
     @abstractmethod
-    def calculate_winner(self):
-        """Calculate and return the winners.
-        Returns a list of length num_winners, or more in case of ties."""
+    def process_ballots(self):
+        """Calculate and return winners and losers.
+        Returns (winners, losers) where:
+            - winners is a list of length num_winners, where each element is either:
+                - a single winner, or
+                - a list of candidates tied for that position
+            - losers is a list of remaining candidates in order
+        """
         pass
 
 
