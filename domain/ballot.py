@@ -7,4 +7,4 @@ class Ballot:
         self.votes = votes
 
     def __repr__(self) -> str:
-        return f'Ballot{self.id}[{self.votes}]' 
+        return f"Ballot{self.id}[{self.votes}]"
