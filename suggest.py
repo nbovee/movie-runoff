@@ -1,5 +1,5 @@
 import argparse
-from domain.gform_csvzip import acquire_file, parse_file
+from domain.file_utils import acquire_file, parse_file
 
 
 class Suggest:

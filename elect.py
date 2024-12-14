@@ -8,47 +8,29 @@ from domain.file_utils import acquire_file, parse_file
 
 class Election:
     def __init__(self, filepath, quiet, method="schulze", num_winners=1):
-        self.movies = []
-        self.ballots = []
         self.file_contents = parse_file(filepath)
-        self.load_ballots()
+        self.movies, self.ballots = Ballot.load_from_file_contents(self.file_contents)
         self.quiet = quiet
         self.tie = False
         self.method = method
         self.num_winners = num_winners
-
-    def load_ballots(self):
-        self.movies = [
-            re.search(r"\[(.+)\]", movie).group(1)
-            for movie in self.file_contents[0][1:]
-        ]
-        for ballot in list(self.file_contents[1:]):
-            self.ballots.append(
-                Ballot([int(val) if val != "" else -1 for val in ballot[1:]])
-            )
+        self.winners = []
+        self.losers = []
 
     def calculate(self):
         voting_method = VotingMethodFactory.create_method(
             self.method, self.movies.copy(), self.ballots, num_winners=self.num_winners
         )
-        results = voting_method.calculate_winner()
+        self.winners, self.losers = voting_method.process_ballots()
         self.tie = voting_method.tie
 
-        # TODO: Check tie handling
-        if self.tie:
-            print(f'Multiple winners tied: {", ".join(results)}')
-            # Randomly select required number of winners
-            winners = []
-            remaining = results.copy()
-            for i in range(min(self.num_winners, len(results))):
-                winner = remaining.pop(randint(0, len(remaining) - 1))
-                winners.append(winner)
-                print(f'{"Winner" if i == 0 else f"#{i+1}"}: {winner}*')
-            print()
-        else:
-            for i, winner in enumerate(results):
+        # Print results
+        for i, winner in enumerate(self.winners):
+            if isinstance(winner, list):
+                print(f'Tie for {"Winner" if i == 0 else f"#{i+1}"}: {", ".join(winner)}*')
+            else:
                 print(f'{"Winner" if i == 0 else f"{f"#{i+1}":>6}"}: {winner}')
-            print()
+        print()
 
 
 def main():
@@ -76,7 +58,7 @@ def main():
     parser.add_argument(
         "-m",
         "--method",
-        help="voting method to use: instant, instant-reorder, or schulze",
+        help="voting method to use",
         choices=["instant", "instant-reorder", "schulze"],
         default="schulze",
     )
