@@ -15,8 +15,75 @@ class Ballot:
     def __repr__(self) -> str:
         return f'Ballot{self.id}[{self.votes}]'
     
+class SchulzeMethod:
+    def __init__(self, movies, ballots):
+        self.movies = movies
+        self.ballots = ballots
+        self.n = len(movies)
+        self.d = [[0 for i in range(self.n)] for j in range(self.n)]
+        self.p = [[0 for i in range(self.n)] for j in range(self.n)]
+        
+    def compute_d(self):
+        # For each pair of candidates, count how many voters prefer i over j
+        for ballot in self.ballots:
+            for i in range(self.n):
+                for j in range(self.n):
+                    if i != j and ballot.votes[i] != -1 and ballot.votes[j] != -1:
+                        if ballot.votes[i] < ballot.votes[j]:
+                            self.d[i][j] += 1
+    
+    def compute_p(self):
+        # Find strongest paths between each pair using Floyd-Warshall algorithm
+        for i in range(self.n):
+            for j in range(self.n):
+                if i != j:
+                    if self.d[i][j] > self.d[j][i]:
+                        self.p[i][j] = self.d[i][j]
+                    else:
+                        self.p[i][j] = 0
+
+        for i in range(self.n):
+            for j in range(self.n):
+                if i != j:
+                    for k in range(self.n):
+                        if i != k and j != k:
+                            self.p[j][k] = max(
+                                self.p[j][k],
+                                min(self.p[j][i], self.p[i][k])
+                            )
+    
+    def get_winner(self):
+        self.compute_d()
+        self.compute_p()
+        
+        # Calculate strength of victory for each candidate
+        strength_scores = []
+        for i in range(self.n):
+            wins = 0
+            for j in range(self.n):
+                if i != j and self.p[i][j] > self.p[j][i]:
+                    wins += 1
+            strength_scores.append((wins, i))
+        
+        # Sort by number of wins (highest to lowest)
+        strength_scores.sort(reverse=True)
+        
+        # Get top two candidates
+        top_score = strength_scores[0][0]
+        second_score = strength_scores[1][0]
+        
+        # If there's a tie for first, return only those tied for first
+        if top_score == second_score:
+            tied_winners = [self.movies[i] for wins, i in strength_scores if wins == top_score]
+            return tied_winners
+        else:
+            # Return winner and runner up
+            winner = self.movies[strength_scores[0][1]]
+            runner_up = self.movies[strength_scores[1][1]]
+            return [winner, runner_up]
+
 class Runoff:
-    def __init__(self, filepath, quiet):
+    def __init__(self, filepath, quiet, method='schulze'):
         self.lowest = 0
         self.movies = []
         self.ballots = []
@@ -25,6 +92,7 @@ class Runoff:
         self.maxVote = len(self.movies)
         self.quiet = quiet
         self.tie = False
+        self.method = method
     
     def load_ballots(self):
         self.movies = [re.search(r'\[(.+)\]', movie).group(1) for movie in self.file_contents[0][1:]]
@@ -120,21 +188,47 @@ class Runoff:
                         self.reorder_ballots()
         print(f'Winner is: {self.movies[0]}{"*" if self.tie else ""}\n')
 
+    def calculate(self):
+        if self.method == 'instant':
+            self.runoff(False)
+        elif self.method == 'instant-reorder':
+            self.runoff(True)
+        elif self.method == 'schulze':
+            schulze = SchulzeMethod(self.movies.copy(), self.ballots)
+            results = schulze.get_winner()
+            
+            if len(results) > 2:  # Tie between more than 2 movies
+                self.tie = True
+                print(f'Multiple winners tied: {", ".join(results)}')
+                winner = results[randint(0, len(results)-1)]
+                remaining = [r for r in results if r != winner]
+                runner_up = remaining[randint(0, len(remaining)-1)]
+                print(f'Randomly selected winner: {winner}*')
+                print(f'Randomly selected runner up: {runner_up}*\n')
+            elif len(results) == 2:  # Clear winner and runner up
+                print(f'Winner is: {results[0]}')
+                print(f'Runner up: {results[1]}\n')
+            else:  # Should never happen, but just in case
+                print(f'Winner is: {results[0]}\n')
+
+
 def main():
-    parser = argparse.ArgumentParser(description='Perform runoff vote calculations for movie night')
+    parser = argparse.ArgumentParser(description='Perform vote calculations for movie night')
     parser.add_argument('-q','--quiet',help='ignore all print statements except the one for the winner',action='store_true')
     parser.add_argument('-r','--reorder_votes',help='after a movie is removed, reorder the ballot votes to the lowest possible numbers (i.e. [1,2,4,5,7] -> [1,2,3,4,5])',action='store_true')
     parser.add_argument('-s','--select',help='select a file instead of using the most recent expected filename',action='store_true')
+    parser.add_argument('-m','--method',help='voting method to use: instant, instant-reorder, or schulze',
+                        choices=['instant', 'instant-reorder', 'schulze'],
+                        default='schulze')
     args = parser.parse_args()
 
-    filepath = acquire_file(args.select, 'Runoff Votes', path='exports/')
-    print(f'~~~~~ All Ballots ~~~~~')
-    allRunoff = Runoff(filepath,args.quiet)
-    allRunoff.runoff(False)
-
-    print(f'~~~~~ All Ballots Reordered ~~~~~')
-    allRunoffReorder = Runoff(filepath,args.quiet)
-    allRunoffReorder.runoff(True)
+    filepath = acquire_file(args.select, 'Runoff Votes', path='ballots/')
+    
+    # method = 'instant-reorder' if args.reorder_votes else args.method
+    method = args.method
+    print(f'~~~~~ Using {method} Method ~~~~~')
+    runoff = Runoff(filepath, args.quiet, method=method)
+    runoff.calculate()
 
 def get_next_highest_in_array(start,arr):
     nextHighest = sys.maxsize
