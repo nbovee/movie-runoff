@@ -58,7 +58,6 @@ def main():
         "--show_losers",
         help="show eliminated movies in order after winners",
         action="store_true",
-        default=True,
     )
     parser.add_argument(
         "-r",
