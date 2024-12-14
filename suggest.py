@@ -3,7 +3,7 @@ from gform_csvzip import acquire_file, parse_file
 
 class Suggest:
     def __init__(self, args) -> None:
-        self.filepath = acquire_file(args.select, 'Suggest a Movie', path='exports/')
+        self.filepath = acquire_file(args.select, 'Suggest a Movie', path='suggestions/')
         self.file_contents = parse_file(self.filepath)
                 
     def pretty_print(self):
