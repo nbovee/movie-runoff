@@ -6,3 +6,4 @@ example\votes
 exports
 *.zip
 specials/*
+.python-version

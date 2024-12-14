@@ -8,7 +8,7 @@ class InstantRunoffMethod(VotingMethod):
     def __init__(self, movies, ballots, **kwargs):
         super().__init__(movies, ballots, **kwargs)
         self.maxVote = len(movies)
-        self.reorder = kwargs.get('reorder', False)
+        self.reorder = kwargs.get("reorder", False)
         self.movies = movies.copy()  # Create a copy to modify
         self.ballots = [
             Ballot(ballot.votes.copy()) for ballot in ballots
