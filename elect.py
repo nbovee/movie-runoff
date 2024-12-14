@@ -3,7 +3,7 @@ import argparse
 from random import randint
 from methods.method_factory import VotingMethodFactory
 from domain.ballot import Ballot
-from domain.gform_csvzip import acquire_file, parse_file
+from domain.file_utils import acquire_file, parse_file
 
 
 class Election:
