@@ -1,21 +1,21 @@
-import re
 import argparse
-from random import randint
 from methods.method_factory import VotingMethodFactory
 from domain.ballot import Ballot
 from domain.file_utils import acquire_file, parse_file
 
 
 class Election:
-    def __init__(self, filepath, quiet, method="schulze", num_winners=1):
+    def __init__(self, filepath, **kwargs):
         self.file_contents = parse_file(filepath)
         self.movies, self.ballots = Ballot.load_from_file_contents(self.file_contents)
-        self.quiet = quiet
+        self.quiet = kwargs.get("quiet", False)
         self.tie = False
-        self.method = method
-        self.num_winners = num_winners
+        self.method = kwargs.get("method", "schulze")
+        self.num_winners = kwargs.get("num_winners", 1)
+        self.show_losers = kwargs.get("show_losers", True)
         self.winners = []
         self.losers = []
+        print(f"~~~~~ Using {self.method.title()} Method ~~~~~")
 
     def calculate(self):
         voting_method = VotingMethodFactory.create_method(
@@ -27,9 +27,19 @@ class Election:
         # Print results
         for i, winner in enumerate(self.winners):
             if isinstance(winner, list):
-                print(f'Tie for {"Winner" if i == 0 else f"#{i+1}"}: {", ".join(winner)}*')
+                print(
+                    f'Tie for {"Winner" if i == 0 else f"#{i+1}"}: {", ".join(winner)}*'
+                )
             else:
                 print(f'{"Winner" if i == 0 else f"{f"#{i+1}":>6}"}: {winner}')
+
+        if self.show_losers and self.losers:
+            print("\nEliminated:")
+            for i, loser in enumerate(self.losers, start=len(self.winners) + 1):
+                if isinstance(loser, list):
+                    print(f'{f"#{i}":>6}: {", ".join(loser)}* (tied)')
+                else:
+                    print(f'{f"#{i}":>6}: {loser}')
         print()
 
 
@@ -42,6 +52,13 @@ def main():
         "--quiet",
         help="ignore all print statements except for final results",
         action="store_true",
+    )
+    parser.add_argument(
+        "-l",
+        "--show_losers",
+        help="show eliminated movies in order after winners",
+        action="store_true",
+        default=True,
     )
     parser.add_argument(
         "-r",
@@ -69,11 +86,7 @@ def main():
 
     filepath = acquire_file(args.select, "Runoff Votes", path="ballots/")
 
-    method = args.method
-    print(f"~~~~~ Using {method.title()} Method ~~~~~")
-    election = Election(
-        filepath, args.quiet, method=method, num_winners=args.num_winners
-    )
+    election = Election(filepath, **vars(args))
     election.calculate()
 
 
