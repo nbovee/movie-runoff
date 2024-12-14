@@ -8,7 +8,7 @@ class SchulzeMethod(VotingMethod):
         self.d = [[0 for i in range(self.n)] for j in range(self.n)]
         self.p = [[0 for i in range(self.n)] for j in range(self.n)]
 
-    def compute_d(self):
+    def score_pairwise(self):
         # For each pair of candidates, count how many voters prefer i over j
         for ballot in self.ballots:
             for i in range(self.n):
@@ -17,7 +17,7 @@ class SchulzeMethod(VotingMethod):
                         if ballot.votes[i] < ballot.votes[j]:
                             self.d[i][j] += 1
 
-    def compute_p(self):
+    def compute_paths(self):
         # Find strongest paths between each pair using Floyd-Warshall algorithm
         for i in range(self.n):
             for j in range(self.n):
@@ -37,8 +37,8 @@ class SchulzeMethod(VotingMethod):
                             )
 
     def process_ballots(self):
-        self.compute_d()
-        self.compute_p()
+        self.score_pairwise()
+        self.compute_paths()
 
         # Calculate strength of victory for each candidate
         strength_scores = []
