@@ -34,10 +34,9 @@
 
 - Must be a video available in digital format. Be cautious of old releases or festival releases. 
 - No restrictions on genre, language, year of release, country of origin, director, rating, runtime, or other attributes.
-- A movie is defined as a single continuous video, regardless of whether it is a theatrical release, a streaming release, or a physical release.
-  - Amateur films and fanworks that are released on services such as youtube, vimeo, etc. are eligible.
-  - Kickassia is a movie, Emesis Blue is a movie, etc.
-- Compilations of shorts are not movies unless they tell a continuous story. (e.g. The ABCs of Death & Parkour Civilization are movies, but Tiktok Compilations are not)
+- A movie is a single continuous video, regardless of whether it was originally a theatrical release, a streaming release, or a physical release.
+- Amateur films and fanworks that are released on services such as youtube, vimeo, etc. are eligible. [Kickassia](https://www.youtube.com/watch?v=NJuz70OHrxE) is a movie, [Emesis Blue](https://www.youtube.com/watch?v=V0ODG8bFme0) is a movie, etc.
+- Compilations of shorts are not movies unless they tell a continuous story. (e.g. [Phantasm: Ravager](https://www.imdb.com/title/tt3627704/) & [Parkour Civilization](https://www.youtube.com/watch?v=2pFwQiwRbcg) are movies, but assorted Tiktok Compilations are not)
 - Sporting events are probably not movies, but we could be convinced otherwise.
 
 ### TV Show Clause
@@ -45,7 +44,7 @@
 - TV episodes over 45 minutes are eligible, but must be entirely self-contained, without any external content.
 - Metaplots should not be critical to the episode's plot due to this clause.
   - For example, Columbo episodes are eligible, Arcane episodes are not.
-- TV shows are subject to a 4 week cooldown, to avoid locking into watching an entire show across multiple nights. This treats them more approximately like a movie, where most series do not reach more 
+- TV shows are subject to a 4 week cooldown period, to avoid long term lock-in on a shows entire run. 
   
 ## Movie Selection
 
@@ -90,7 +89,7 @@ The Cinematographic power of the birthday dictator is near absolute. if you are 
 - They may selected any amount of movies to a soft limit of 3.5 hours of runtime.
   - Longer total runtime is allowed, but the assembly must be notified ahead of time.
 - A repeated movie is allowed, repeat showings are not.
-  - For example, though we have already seen it, the Chairman cannot show you the Strange Thing About the Johnsons 7 times.
+  - For example, though we have already seen it, the Chairperson cannot show you the Strange Thing About the Johnsons 7 times.
   - However, they may show you the Strange Thing About the Johnsons, and its 6 sequels.
   
 ### Games of Chance and Skill
