@@ -24,19 +24,22 @@
 ## Decorum of Members
 
 - Avoid relegating the movie night to a chore or second screen, we are here for each other!
-- If a movie is not to your taste, it is fine to say so, but please be respectful and avoid repeating the same point throughout the night.
-- Talking and chatting throughout the movie is encouraged, this is a social event foremost. However, if you get ignored or shushed it is probably because the movie is at a critical point, or the person you are speaking to has temporarily muted the chat to focus on the movie.
-- If you have a movie you think is great but it did not win, it is ok and encouraged to suggest it again. Passion for a movie makes it quite likely that it will be selected at some point.
-- Movies are not revealed until partially underway. This is to prevent attendee dropout, and associated insult to your friends who suggested the winning movie. 
-  - If the movie is not to your taste, you do not have to actually be paying attention, but be aware the majority of attendees DID want to watch this. We suggest watching movies you dislike with an eye toward filmmaking and cinematography. 
-
+- If your suggested movie did not win, please submit it again. Passion for a movie makes it quite likely that it will be selected at some point. Maybe the synopsis could be made more enticing?
+- If content within a scene is too extreme for you, don't force yourself to watch it. 
+- Movies are not revealed until partially underway. This is to prevent attendee dropout due to the winners, and the associated insult to your friends who have differing taste. 
+  - Be aware the majority of attendees DID want to watch the winning movie. We suggest watching movies you dislike with an eye toward filmmaking and cinematography, instead of ignoring them. 
+- Talking and chatting throughout the movie is encouraged, this is a social event foremost. However, if you get ignored it is probably because the movie is at a critical scene. Attendees will sometimes mute the chat so they can focus on the movie.
+- If a movie is not to your taste, it is fine to say so, but please be respectful and avoid repeating the same point throughout the night. Comedy comes in threes, not crituqe.
+  
 ## Eligibility
 
 - Must be a video available in digital format. Be cautious of old releases or festival releases. 
 - No restrictions on genre, language, year of release, country of origin, director, rating, runtime, or other attributes.
 - A movie is a single continuous video, regardless of whether it was originally a theatrical release, a streaming release, or a physical release.
-- Amateur films and fanworks that are released on services such as youtube, vimeo, etc. are eligible. [Kickassia](https://www.youtube.com/watch?v=NJuz70OHrxE) is a movie, [Emesis Blue](https://www.youtube.com/watch?v=V0ODG8bFme0) is a movie, etc.
-- Compilations of shorts are not movies unless they tell a continuous story. (e.g. [Phantasm: Ravager](https://www.imdb.com/title/tt3627704/) & [Parkour Civilization](https://www.youtube.com/watch?v=2pFwQiwRbcg) are movies, but assorted Tiktok Compilations are not)
+- Amateur films and fanworks that are released on services such as youtube, vimeo, etc. are eligible. 
+  - [Kickassia](https://www.youtube.com/watch?v=NJuz70OHrxE) is a movie, [Emesis Blue](https://www.youtube.com/watch?v=V0ODG8bFme0) is a movie, etc.
+- Compilations of shorts are not movies unless they tell a continuous story. 
+  - (e.g. [Phantasm: Ravager](https://www.imdb.com/title/tt3627704/) & [Parkour Civilization](https://www.youtube.com/watch?v=2pFwQiwRbcg) are movies, but assorted Tiktok Compilations are not)
 - Sporting events are probably not movies, but we could be convinced otherwise.
 
 ### TV Show Clause
@@ -104,7 +107,7 @@ To date we have run:
   - Select a CPU controller character for a smash battle royale.
   - The first character to be eleminated, and the winning character's owner selects the movie for the night.
   - Ties are broken by in-game mechanics.
-- 
+
 ### Abdication
 
 Some nights no member of the Cabal is able to be present. In this case, the movie revolutionaries (you, the audience) can ad hoc select a movie, viewing, or other event for the night. Cabal will notify the audience ASAP in these situations.
