@@ -1,0 +1,21 @@
+# Environment variables
+.env
+
+# Google credentials
+*.json
+
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.sum
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo 

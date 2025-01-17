@@ -180,3 +180,6 @@ exports
 *.zip
 specials/*
 .python-version
+
+.env
+data/
