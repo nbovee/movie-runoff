@@ -2,7 +2,7 @@
 .env
 
 # Google credentials
-*.json
+client.json
 
 # Go specific
 *.exe
@@ -13,9 +13,3 @@
 *.test
 *.out
 go.sum
-
-# IDE specific
-.idea/
-.vscode/
-*.swp
-*.swo 
